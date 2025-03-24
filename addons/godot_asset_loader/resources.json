@@ -48,6 +48,14 @@
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_pumpkins/polygon_pumpkins.zip"
 	},
 	{
+		"name": "Mixamo - X Bot",
+		"type": "3D Model",
+		"description": "Animate 3D characters for games, film, and more.",
+		"category": "Character",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/mixamo_x_bot/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/mixamo_x_bot/mixamo_x_bot.zip"
+	},
+	{
 		"name": "Mixamo - Y Bot",
 		"type": "3D Model",
 		"description": "Animate 3D characters for games, film, and more.",
