@@ -149,3 +149,31 @@ func select():
 func deselect():
 	is_selected = false
 	self_modulate = Color(1, 1, 1)  # Reset to normal
+
+# Method to adapt the card to the grid size
+func set_card_width(width):
+	# Update the card minimum size
+	custom_minimum_size.x = width
+	
+	# Adjust the preview panel proportionally
+	var preview_panel = get_node_or_null("VBoxContainer/HBoxContainer/PreviewPanel")
+	if preview_panel:
+		# Determine appropriate preview size (keeping it square)
+		var preview_size = min(100, width * 0.25)  # 25% of width but not more than 100px
+		preview_panel.custom_minimum_size = Vector2(preview_size, preview_size)
+	
+	# Make sure all text elements handle sizing properly
+	var info_container = get_node_or_null("VBoxContainer/HBoxContainer/InfoContainer")
+	if info_container:
+		info_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var title_label = get_node_or_null("VBoxContainer/HBoxContainer/InfoContainer/Title")
+	if title_label:
+		title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	
+	var description_label = get_node_or_null("VBoxContainer/Description")
+	if description_label:
+		description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	
+	# Request redraw
+	queue_redraw()

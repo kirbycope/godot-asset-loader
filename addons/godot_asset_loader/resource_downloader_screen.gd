@@ -13,6 +13,10 @@ var search_box
 var category_filter
 var type_filter
 
+# Responsiveness variables
+var min_card_width = 450  # Minimum width for cards
+var resizing_timer = null
+var last_width = 0
 
 ## Called when the node is "ready", i.e. when both the node and its children have entered the scene tree.
 func _ready():
@@ -34,12 +38,30 @@ func _ready():
 	
 	# Disable download button initially
 	$VBoxContainer/ButtonContainer/DownloadButton.disabled = true
+	
+	# Set up responsiveness handling
+	resizing_timer = Timer.new()
+	add_child(resizing_timer)
+	resizing_timer.wait_time = 0.2  # Small delay to avoid constant recalculation
+	resizing_timer.one_shot = true
+	resizing_timer.connect("timeout", Callable(self, "_on_resize_timeout"))
+	
+	# Connect to window resize notification
+	get_tree().get_root().connect("size_changed", Callable(self, "_on_window_resized"))
+	
+	# Call updates on visibility change
+	connect("visibility_changed", Callable(self, "_on_visibility_changed"))
 
+## Override _process to check for container size changes
+func _process(delta):
+	var scroll_container = $VBoxContainer/ContentContainer/ScrollContainer
+	if scroll_container and scroll_container.size.x != last_width:
+		last_width = scroll_container.size.x
+		_on_window_resized()
 
 # Method to set the plugin reference
 func set_plugin_reference(plugin):
 	plugin_reference = plugin
-
 
 # Populate the resource list from the loaded resources
 func populate_resource_list(resources):
@@ -72,7 +94,6 @@ func populate_resource_list(resources):
 	# Apply current filters
 	apply_filters()
 
-
 # Apply all current filters and search criteria
 func apply_filters():
 	var search_text = search_box.text.to_lower()
@@ -100,7 +121,6 @@ func apply_filters():
 	
 	display_resources()
 
-
 # Display the filtered resources in the grid
 func display_resources():
 	# Clear existing children
@@ -117,17 +137,17 @@ func display_resources():
 	# Update UI based on results
 	var results_label = $VBoxContainer/ContentContainer/ResultsLabel
 	results_label.text = str(filtered_resources.size()) + " resources found"
-
+	
+	# Update grid columns for responsiveness
+	_update_grid_columns()
 
 # Handler for search text changes
 func _on_search_text_changed(new_text):
 	apply_filters()
 
-
 # Handler for category or type filter changes
 func _on_filter_changed(index):
 	apply_filters()
-
 
 # Handler for resource card selection
 func _on_resource_card_selected(resource_card):
@@ -146,14 +166,48 @@ func _on_resource_card_selected(resource_card):
 		selected_resource = null
 		$VBoxContainer/ButtonContainer/DownloadButton.disabled = true
 
-
 # Handler for download button press
 func _on_download_pressed():
 	if selected_resource and plugin_reference:
 		plugin_reference.download_resource(selected_resource)
 
-
 # Handler for refresh button press
 func _on_refresh_pressed():
 	if plugin_reference:
 		plugin_reference.load_resources()
+
+# Responsive layout handlers
+func _on_window_resized():
+	resizing_timer.start()
+
+func _on_resize_timeout():
+	_update_grid_columns()
+
+func _on_visibility_changed():
+	if visible:
+		# Update columns when the tab becomes visible
+		_update_grid_columns()
+
+func _update_grid_columns():
+	if resources_grid and resources_grid.is_inside_tree():
+		var scroll_container = $VBoxContainer/ContentContainer/ScrollContainer
+		var available_width = scroll_container.size.x
+		
+		# Calculate how many cards can fit
+		var columns = max(1, int(available_width / min_card_width))
+		
+		# Update the grid
+		resources_grid.columns = columns
+		
+		# Calculate appropriate card width
+		var margin = 10  # Margin between cards
+		var card_width = (available_width - (margin * (columns - 1))) / columns
+		
+		# Update each card's size
+		for card in resources_grid.get_children():
+			# If the card has a set_card_width method (which we added), use it
+			if card.has_method("set_card_width"):
+				card.set_card_width(card_width - 10)  # Account for internal padding
+			else:
+				# Otherwise just set the minimum size directly
+				card.custom_minimum_size.x = card_width - 10
