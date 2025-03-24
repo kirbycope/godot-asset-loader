@@ -40,14 +40,6 @@
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/brackeys_platformer_assets/brackeys_platformer_assets.zip"
 	},
 	{
-		"name": "POLYGON - Pumpkins Pack",
-		"type": "3D Model",
-		"description": "Synty® Studios presents: POLYGON - Pumpkins Pack.",
-		"category": "Prop",
-		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_pumpkins/preview.png",
-		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_pumpkins/polygon_pumpkins.zip"
-	},
-	{
 		"name": "Mixamo - X Bot",
 		"type": "3D Model",
 		"description": "Animate 3D characters for games, film, and more.",
@@ -62,5 +54,29 @@
 		"category": "Character",
 		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/mixamo_y_bot/preview.png",
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/mixamo_y_bot/mixamo_y_bot.zip"
+	},
+	{
+		"name": "POLYGON - Easter Pack",
+		"type": "3D Model",
+		"description": "Synty® Studios presents: POLYGON - Easter Pack.",
+		"category": "Prop",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_easter/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_easter/polygon_ppolygon_eastermpkins.zip"
+	},
+	{
+		"name": "POLYGON - Pumpkins Pack",
+		"type": "3D Model",
+		"description": "Synty® Studios presents: POLYGON - Pumpkins Pack.",
+		"category": "Prop",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_pumpkins/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_pumpkins/polygon_pumpkins.zip"
+	},
+	{
+		"name": "POLYGON - Xmas Pack",
+		"type": "3D Model",
+		"description": "Synty® Studios presents: POLYGON - Xmas Pack.",
+		"category": "Prop",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_xmas/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_xmas/polygon_xmas.zip"
 	}
 ]
