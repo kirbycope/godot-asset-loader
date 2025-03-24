@@ -29,15 +29,71 @@ layout_mode = 2
 [node name="HeaderLabel" type="Label" parent="VBoxContainer/HeaderContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
 text = "Resource Downloader"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="SearchContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SearchLabel" type="Label" parent="VBoxContainer/SearchContainer"]
+layout_mode = 2
+text = "Search:"
+
+[node name="SearchBox" type="LineEdit" parent="VBoxContainer/SearchContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search for assets by name or description"
+clear_button_enabled = true
+
+[node name="FilterContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="CategoryLabel" type="Label" parent="VBoxContainer/FilterContainer"]
+layout_mode = 2
+text = "Category:"
+
+[node name="CategoryFilter" type="OptionButton" parent="VBoxContainer/FilterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 1
+selected = 0
+popup_hide_on_item_selection = false
+item_0/text = "All"
+item_0/id = 0
+
+[node name="TypeLabel" type="Label" parent="VBoxContainer/FilterContainer"]
+layout_mode = 2
+text = "Type:"
+
+[node name="TypeFilter" type="OptionButton" parent="VBoxContainer/FilterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 1
+selected = 0
+popup_hide_on_item_selection = false
+item_0/text = "All"
+item_0/id = 0
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ContentContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ResourcesGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="ResultsLabel" type="Label" parent="VBoxContainer/ContentContainer"]
+layout_mode = 2
+text = "0 resources found"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/ContentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResourcesGrid" type="GridContainer" parent="VBoxContainer/ContentContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

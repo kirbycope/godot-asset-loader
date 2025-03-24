@@ -136,29 +136,27 @@ func _on_request_completed(result, response_code, headers, body):
 	current_resource_data = null
 
 
-## Extract a ZIP file to the assets directory
+## Extract a ZIP file to the assets directory.
 func extract_zip(zip_path, zip_filename):
+
 	# Get the asset name without the .zip extension
 	var asset_name = zip_filename.get_basename()
-	
+
 	# Define the target Godot directory
 	var target_godot_dir = "res://assets/" + asset_name
-	
+
 	# Convert Godot paths to OS file paths
 	var project_dir = ProjectSettings.globalize_path("res://")
 	var zip_os_path = ProjectSettings.globalize_path(zip_path)
 	var target_os_dir = ProjectSettings.globalize_path(target_godot_dir)
-	
-	print("Extracting ZIP from: ", zip_os_path)
-	print("Extracting ZIP to: ", target_os_dir)
-	
+
 	# Use OS command to unzip
 	var output = []
 	var exit_code = 0
-	
+
 	# Get the operating system
 	var os_name = OS.get_name()
-	
+
 	if os_name == "Windows":
 		# Windows command
 		# Make sure target directory exists first
@@ -170,7 +168,7 @@ func extract_zip(zip_path, zip_filename):
 	elif os_name == "macOS" or os_name == "Linux":
 		# macOS/Linux command (mkdir -p will create parent directories if needed)
 		exit_code = OS.execute("bash", ["-c", "mkdir -p \"" + target_os_dir + "\" && unzip -o \"" + zip_os_path + "\" -d \"" + target_os_dir + "\""], output, true)
-	
+
 	if exit_code != 0:
 		printerr("Failed to extract ZIP file: ", zip_path)
 		for line in output:
@@ -184,12 +182,12 @@ func extract_zip(zip_path, zip_filename):
 			print("ZIP file deleted: ", zip_path)
 		else:
 			printerr("Failed to delete ZIP file: ", zip_path)
-		
+
 		# Refresh the FileSystem dock to show the new files and removed ZIP
 		EditorInterface.get_resource_filesystem().scan()
 
 
-## Delete a file
+## Delete a file.
 func delete_file(file_path):
 	if FileAccess.file_exists(file_path):
 		var dir = DirAccess.open("res://")
