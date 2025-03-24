@@ -38,5 +38,13 @@
 		"category": "Misc",
 		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/brackeys_platformer_assets/preview.png",
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/brackeys_platformer_assets/brackeys_platformer_assets.zip"
+	},
+	{
+		"name": "POLYGON - Pumpkins Pack",
+		"type": "3D Model",
+		"description": "Synty® Studios presents: POLYGON - Pumpkins Pack.",
+		"category": "Prop",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_pumpkins/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_pumpkins/polygon_pumpkins.zip"
 	}
 ]
