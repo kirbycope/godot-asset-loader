@@ -48,9 +48,9 @@ text = "Resource Title"
 layout_mode = 2
 text = "Resource Type"
 
-[node name="Category" type="Label" parent="VBoxContainer/HBoxContainer/InfoContainer"]
+[node name="AuthorLicense" type="Label" parent="VBoxContainer/HBoxContainer/InfoContainer"]
 layout_mode = 2
-text = "Category: Example"
+text = "Unknown - Unknown"
 
 [node name="Description" type="Label" parent="VBoxContainer"]
 layout_mode = 2

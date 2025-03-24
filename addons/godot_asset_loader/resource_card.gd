@@ -22,23 +22,33 @@ func setup(data):
 	# Safely access nodes
 	var title_label = get_node_or_null("VBoxContainer/HBoxContainer/InfoContainer/Title")
 	var type_label = get_node_or_null("VBoxContainer/HBoxContainer/InfoContainer/Type")
-	var category_label = get_node_or_null("VBoxContainer/HBoxContainer/InfoContainer/Category")
+	var author_license_label = get_node_or_null("VBoxContainer/HBoxContainer/InfoContainer/AuthorLicense")
 	var description_label = get_node_or_null("VBoxContainer/Description")
 	
+	# Set title
 	if title_label:
-		title_label.text = data.name
+		title_label.text = data.name if data.has("name") else "Unknown Title"
+	
+	# Set type
 	if type_label:
-		type_label.text = data.type
+		type_label.text = data.type if data.has("type") else "Unknown Type"
 	
-	# If there's a category
-	if category_label:
-		if data.has("category") and data.category:
-			category_label.text = "Category: " + data.category
-			category_label.visible = true
-		else:
-			category_label.visible = false
+	# Handle author and license information
+	if author_license_label:
+		# Make sure we use has() to check for keys before accessing them
+		var author = "Unknown"
+		var license = "Unknown"
+		
+		if data.has("author"):
+			author = data.author
+		
+		if data.has("license"):
+			license = data.license
+			
+		author_license_label.text = author + " - " + license
+		author_license_label.visible = true
 	
-	# If there's a description, limit to 120 characters
+	# Show description if available
 	if description_label:
 		if data.has("description") and data.description:
 			var desc = data.description
@@ -54,7 +64,7 @@ func setup(data):
 		# Start by setting a placeholder color
 		var preview_panel = get_node_or_null("VBoxContainer/HBoxContainer/PreviewPanel")
 		if preview_panel:
-			if data.type == "3D Model":
+			if data.has("type") and data.type == "3D Model":
 				preview_panel.self_modulate = Color(0.2, 0.6, 1.0)  # Blue for 3D models
 			else:
 				preview_panel.self_modulate = Color(0.5, 0.8, 0.5)  # Green for others

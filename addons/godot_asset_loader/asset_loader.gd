@@ -29,7 +29,7 @@ func _enter_tree():
 	add_child(http_request)
 	http_request.connect("request_completed", Callable(self, "_on_request_completed"))
 	
-	# Load resources from JSON
+	# Load resources from online JSON
 	load_resources()
 
 
@@ -46,29 +46,46 @@ func _exit_tree():
 	http_request.free()
 
 
-## Load the resources from the JSON file.
+## Load the resources from the remote JSON file.
 func load_resources():
+	# Create a separate HTTP request for loading resources
+	var resources_http_request = HTTPRequest.new()
+	add_child(resources_http_request)
+	resources_http_request.connect("request_completed", Callable(self, "_on_resources_loaded"))
+	
+	# Set the URL to fetch the resources.json from GitHub
+	var url = "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/resources.json"
+	
+	# Start the HTTP request
+	var error = resources_http_request.request(url)
+	if error != OK:
+		printerr("An error occurred when trying to fetch the resources.json file: ", error)
 
-	# Check if the resources JSON file exists
-	if FileAccess.file_exists("res://addons/godot_asset_loader/resources.json"):
 
-		# Read the JSON file with resource listings
-		var file = FileAccess.open("res://addons/godot_asset_loader/resources.json", FileAccess.READ)
-		var json_string = file.get_as_text()
-		file.close()
-
-		# Parse the JSON file
-		var json = JSON.new()
-		var parse_result = json.parse(json_string)
-
-		# Check if the JSON file was parsed successfully
-		if parse_result == OK:
-
-			# Get the list of resources
-			resource_list = json.get_data()
-
-			# Populate the resource list in the UI
-			resource_downloader_screen.populate_resource_list(resource_list)
+## Called when the resources JSON file has been loaded.
+func _on_resources_loaded(result, response_code, headers, body):
+	# Check if the request was successful
+	if result != HTTPRequest.RESULT_SUCCESS:
+		printerr("Error loading resources JSON: ", result)
+		return
+	
+	# Parse the JSON content
+	var json = JSON.new()
+	var parse_result = json.parse(body.get_string_from_utf8())
+	
+	if parse_result == OK:
+		# Get the list of resources
+		resource_list = json.get_data()
+		
+		# Populate the resource list in the UI
+		resource_downloader_screen.populate_resource_list(resource_list)
+	else:
+		printerr("Error parsing JSON: ", parse_result, " at line ", json.get_error_line())
+	
+	# Clean up the HTTP request node - fix the potential null reference
+	var request_node = get_node_or_null("HTTPRequest")
+	if request_node:
+		request_node.queue_free()
 
 
 ## Download the selected resource.
