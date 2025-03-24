@@ -30,5 +30,13 @@
 		"category": "Library",
 		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/universal_animation_library/preview.png",
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/universal_animation_library/universal_animation_library.zip"
+	},
+	{
+		"name": "Brackeys' Platformer Bundle",
+		"type": "Misc",
+		"description": "Make your first game using this small collection of assets.",
+		"category": "Bundle",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/brackeys_platformer_assets/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/brackeys_platformer_assets/brackeys_platformer_assets.zip"
 	}
 ]
