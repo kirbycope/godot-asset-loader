@@ -24,14 +24,6 @@
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/prototype_textures/prototype_textures.zip"
 	},
 	{
-		"name": "Universal Animation Library",
-		"type": "Animation",
-		"description": "A kit of 45 animations, ready for retargeting.",
-		"category": "Library",
-		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/universal_animation_library/preview.png",
-		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/universal_animation_library/universal_animation_library.zip"
-	},
-	{
 		"name": "Brackeys' Platformer Bundle",
 		"type": "Bundle",
 		"description": "Make your first game using this small collection of assets.",
@@ -78,5 +70,13 @@
 		"category": "Prop",
 		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_xmas/preview.png",
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_xmas/polygon_xmas.zip"
+	},
+	{
+		"name": "Universal Animation Library",
+		"type": "Animation",
+		"description": "A kit of 45 animations, ready for retargeting.",
+		"category": "Library",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/universal_animation_library/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/universal_animation_library/universal_animation_library.zip"
 	}
 ]
