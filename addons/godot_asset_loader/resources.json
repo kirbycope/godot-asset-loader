@@ -72,6 +72,14 @@
 		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/polygon_xmas/polygon_xmas.zip"
 	},
 	{
+		"name": "Shrek (Rigged)",
+		"type": "Character",
+		"description": "A simple rig of Shrek.",
+		"category": "Library",
+		"preview": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/shrek/preview.png",
+		"url": "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/shrek/shrek.zip"
+	},
+	{
 		"name": "Universal Animation Library",
 		"type": "Animation",
 		"description": "A kit of 45 animations, ready for retargeting.",
