@@ -12,6 +12,8 @@ var filtered_resources = []
 var search_box
 var category_filter
 var type_filter
+var settings_button
+var settings_dialog
 
 # Responsiveness variables
 var min_card_width = 450  # Minimum width for cards
@@ -35,6 +37,16 @@ func _ready():
 	
 	type_filter = $VBoxContainer/FilterContainer/TypeFilter
 	type_filter.connect("item_selected", Callable(self, "_on_filter_changed"))
+	
+	# Setup settings button
+	settings_button = $VBoxContainer/FilterContainer/SettingsButton
+	settings_button.connect("pressed", Callable(self, "_on_settings_button_pressed"))
+	
+	# Create settings dialog
+	settings_dialog = load("res://addons/godot_asset_loader/settings_dialog.tscn").instantiate()
+	add_child(settings_dialog)
+	settings_dialog.connect("settings_saved", Callable(self, "_on_settings_saved"))
+	settings_dialog.hide()
 	
 	# Disable download button initially
 	$VBoxContainer/ButtonContainer/DownloadButton.disabled = true
@@ -174,6 +186,21 @@ func _on_download_pressed():
 # Handler for refresh button press
 func _on_refresh_pressed():
 	if plugin_reference:
+		plugin_reference.load_resources()
+		
+# Handler for settings button press
+func _on_settings_button_pressed():
+	if plugin_reference:
+		settings_dialog.initialize(plugin_reference.json_url)
+		settings_dialog.show()
+		
+# Handler for when settings are saved
+func _on_settings_saved(json_url):
+	if plugin_reference:
+		# Save the new settings
+		plugin_reference.save_settings(json_url)
+		
+		# Reload resources with the new URL
 		plugin_reference.load_resources()
 
 # Responsive layout handlers

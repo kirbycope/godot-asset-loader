@@ -78,6 +78,11 @@ popup_hide_on_item_selection = false
 item_0/text = "All"
 item_0/id = 0
 
+[node name="SettingsButton" type="Button" parent="VBoxContainer/FilterContainer"]
+layout_mode = 2
+tooltip_text = "Configure Asset Loader Settings"
+text = "Settings"
+
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 

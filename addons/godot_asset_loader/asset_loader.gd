@@ -11,9 +11,16 @@ var download_path = "res://"
 var current_download_file = ""
 var current_resource_data = null
 
+# Settings
+var settings_file_path = "user://asset_loader_settings.cfg"
+var json_url = "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/resources.json"
+
 
 ## Called when the node enters the `SceneTree` (e.g. upon instantiating, scene changing, or after calling add_child in a script).
 func _enter_tree():
+
+	# Load settings
+	load_settings()
 
 	# Create the main editor screen
 	resource_downloader_screen = load("res://addons/godot_asset_loader/resource_downloader_screen.tscn").instantiate()
@@ -39,12 +46,45 @@ func _exit_tree():
 	# Removes the control from the bottom panel
 	remove_control_from_bottom_panel(resource_downloader_screen)
 
+	# Check if the settings dialog exists and free it
+	var settings_dialog = resource_downloader_screen.get_node_or_null("SettingsDialog")
+	if settings_dialog:
+		settings_dialog.queue_free()
+
 	# You have to manually Node.queue_free the control
 	resource_downloader_screen.free()
 
 	# Free the HTTP request node
 	http_request.free()
 
+
+## Load settings from config file
+func load_settings():
+	if FileAccess.file_exists(settings_file_path):
+		var config = ConfigFile.new()
+		var err = config.load(settings_file_path)
+		if err == OK:
+			# Load JSON URL if it exists in the config
+			if config.has_section_key("settings", "json_url"):
+				json_url = config.get_value("settings", "json_url")
+		else:
+			printerr("Error loading settings file: ", err)
+
+## Save settings to config file
+func save_settings(new_json_url):
+	var config = ConfigFile.new()
+	
+	# Set the JSON URL in the config
+	config.set_value("settings", "json_url", new_json_url)
+	
+	# Save the config
+	var err = config.save(settings_file_path)
+	if err != OK:
+		printerr("Error saving settings file: ", err)
+	else:
+		# Update the current URL
+		json_url = new_json_url
+		print("Settings saved successfully")
 
 ## Load the resources from the remote JSON file.
 func load_resources():
@@ -53,11 +93,8 @@ func load_resources():
 	add_child(resources_http_request)
 	resources_http_request.connect("request_completed", Callable(self, "_on_resources_loaded"))
 	
-	# Set the URL to fetch the resources.json from GitHub
-	var url = "https://raw.githubusercontent.com/kirbycope/godot-asset-library/refs/heads/main/resources.json"
-	
 	# Start the HTTP request
-	var error = resources_http_request.request(url)
+	var error = resources_http_request.request(json_url)
 	if error != OK:
 		printerr("An error occurred when trying to fetch the resources.json file: ", error)
 
