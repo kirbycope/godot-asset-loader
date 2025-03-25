@@ -187,19 +187,19 @@ func _on_download_pressed():
 func _on_refresh_pressed():
 	if plugin_reference:
 		plugin_reference.load_resources()
-		
+
 # Handler for settings button press
 func _on_settings_button_pressed():
 	if plugin_reference:
-		settings_dialog.initialize(plugin_reference.json_url)
+		settings_dialog.initialize(plugin_reference.json_url, plugin_reference.access_token)
 		settings_dialog.show()
-		
+
 # Handler for when settings are saved
-func _on_settings_saved(json_url):
+func _on_settings_saved(json_url, access_token):
 	if plugin_reference:
 		# Save the new settings
-		plugin_reference.save_settings(json_url)
-		
+		plugin_reference.save_settings(json_url, access_token)
+
 		# Reload resources with the new URL
 		plugin_reference.load_resources()
 

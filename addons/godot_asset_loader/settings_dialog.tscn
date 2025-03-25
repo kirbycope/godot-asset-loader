@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxwb7mji7le3c"]
+[gd_scene load_steps=2 format=3 uid="uid://dfxn88lww3x3"]
 
-[ext_resource type="Script" uid="uid://dwrvhodd8sq4c" path="res://addons/godot_asset_loader/settings_dialog.gd" id="1_0x6jc"]
+[ext_resource type="Script" uid="uid://dwrvhodd8sq4c" path="res://addons/godot_asset_loader/settings_dialog.gd" id="1_settings"]
 
 [node name="SettingsDialog" type="Window"]
 title = "Asset Loader Settings"
 initial_position = 2
-size = Vector2i(600, 200)
+size = Vector2i(600, 260)
 exclusive = true
-script = ExtResource("1_0x6jc")
+script = ExtResource("1_settings")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -31,7 +31,6 @@ layout_mode = 2
 
 [node name="JSONURLContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="JSONURLLabel" type="Label" parent="VBoxContainer/JSONURLContainer"]
 layout_mode = 2
@@ -46,6 +45,26 @@ clear_button_enabled = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 text = "This is the URL to the JSON file containing the asset library resources."
+autowrap_mode = 3
+
+[node name="AccessTokenContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AccessTokenLabel" type="Label" parent="VBoxContainer/AccessTokenContainer"]
+layout_mode = 2
+text = "Access Token (Optional):"
+
+[node name="AccessTokenInput" type="LineEdit" parent="VBoxContainer/AccessTokenContainer"]
+layout_mode = 2
+placeholder_text = "Enter GitHub personal access token for private repositories"
+clear_button_enabled = true
+secret = true
+
+[node name="InfoLabel" type="Label" parent="VBoxContainer/AccessTokenContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "Required only for private repositories. The token will be stored locally."
 autowrap_mode = 3
 
 [node name="ButtonContainer" type="HBoxContainer" parent="VBoxContainer"]
