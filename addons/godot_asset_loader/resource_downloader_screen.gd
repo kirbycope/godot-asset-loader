@@ -75,6 +75,10 @@ func _process(delta):
 func set_plugin_reference(plugin):
 	plugin_reference = plugin
 
+# Method to get the plugin reference (used by resource cards)
+func get_plugin_reference():
+	return plugin_reference
+
 # Populate the resource list from the loaded resources
 func populate_resource_list(resources):
 	all_resources = resources

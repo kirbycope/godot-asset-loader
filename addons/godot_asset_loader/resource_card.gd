@@ -73,9 +73,25 @@ func setup(data):
 		load_preview_image(data.preview)
 
 func load_preview_image(preview_url):
-	
 	# Start the HTTP request to get the image
 	var headers = []
+
+	# Check if this is a GitHub URL
+	if preview_url.begins_with("https://github.com") or preview_url.begins_with("https://raw.githubusercontent.com"):
+		# Get access token from plugin (parent nodes)
+		var plugin = null
+		var parent = get_parent()
+		while parent and not plugin:
+			if parent.has_method("get_plugin_reference"):
+				plugin = parent.get_plugin_reference()
+			parent = parent.get_parent()
+		
+		# Add authorization header if we found a plugin and it has an access token
+		if plugin and not plugin.access_token.is_empty():
+			headers.append("Authorization: token " + plugin.access_token)
+			print("Using token for preview image: " + preview_url)
+
+	# Start the HTTP request
 	var error = http_request.request(preview_url, headers, HTTPClient.METHOD_GET)
 	if error != OK:
 		printerr("An error occurred in the HTTP request for preview image.")
@@ -83,6 +99,10 @@ func load_preview_image(preview_url):
 func _on_preview_image_loaded(result, response_code, headers, body):
 	if result != HTTPRequest.RESULT_SUCCESS:
 		printerr("Error downloading preview image: ", result)
+		return
+	
+	if response_code != 200:
+		printerr("HTTP Error: " + str(response_code) + " when loading preview image")
 		return
 	
 	# Create an image from the downloaded data
