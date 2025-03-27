@@ -89,7 +89,6 @@ func load_preview_image(preview_url):
 		# Add authorization header if we found a plugin and it has an access token
 		if plugin and not plugin.access_token.is_empty():
 			headers.append("Authorization: token " + plugin.access_token)
-			print("Using token for preview image: " + preview_url)
 
 	# Start the HTTP request
 	var error = http_request.request(preview_url, headers, HTTPClient.METHOD_GET)

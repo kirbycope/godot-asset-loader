@@ -105,9 +105,6 @@ func load_resources():
 	if not access_token.is_empty() and json_url.begins_with("https://"):
 		headers.append("Authorization: token " + access_token)
 	
-	print("Loading resources from: " + json_url)
-	print("Using authentication: " + str(not access_token.is_empty()))
-	
 	# Start the HTTP request
 	var error = resources_http_request.request(json_url, headers, HTTPClient.METHOD_GET)
 	if error != OK:
@@ -125,10 +122,6 @@ func download_resource(resource_data):
 	var headers = []
 	if not access_token.is_empty() and (url.begins_with("https://github.com") or url.begins_with("https://raw.githubusercontent.com")):
 		headers.append("Authorization: token " + access_token)
-		
-	# Debug info
-	print("Downloading resource from: " + url)
-	print("Using authentication: " + str(not access_token.is_empty()))
 
 	# Start the download
 	var error = http_request.request(url, headers, HTTPClient.METHOD_GET)
@@ -165,7 +158,6 @@ func _on_request_completed(result, response_code, headers, body):
 		# Write the downloaded data to the file
 		file.store_buffer(body)
 		file.close()
-		print("Resource downloaded successfully: ", save_path)
 		
 		# If this is a ZIP file, extract it
 		if file_name.ends_with(".zip"):
@@ -174,8 +166,6 @@ func _on_request_completed(result, response_code, headers, body):
 		# If resource needs importing, trigger import
 		elif ResourceLoader.exists(save_path):
 			var resource = ResourceLoader.load(save_path)
-			if resource:
-				print("Resource loaded: ", resource)
 	else:
 		printerr("Failed to open file for writing: ", save_path)
 
@@ -265,14 +255,10 @@ func extract_zip(zip_path, zip_filename):
 		printerr("Failed to extract ZIP file: ", zip_path)
 		for line in output:
 			printerr(line)
-	else:
-		print("ZIP extracted successfully to: ", target_godot_dir)
-		
+	else:		
 		# Delete the ZIP file after successful extraction
 		var delete_success = delete_file(zip_path)
-		if delete_success:
-			print("ZIP file deleted: ", zip_path)
-		else:
+		if !delete_success:
 			printerr("Failed to delete ZIP file: ", zip_path)
 
 		# Refresh the FileSystem dock to show the new files and removed ZIP
